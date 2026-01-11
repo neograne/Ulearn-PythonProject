@@ -56,5 +56,5 @@
 ### Клонирование репозитория
 
 ```bash
-git clone https://github.com/your-username/pc-builder.git
+git clone https://github.com/neograne/Ulearn-PythonProject.git
 cd pc-builder
