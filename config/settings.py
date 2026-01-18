@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-временный-ключ-поменяем-по�
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'neograne.pythonanywhere.com']
 
 
 # Application definition
@@ -92,12 +92,12 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Для разработки
 STATIC_ROOT = BASE_DIR / 'staticfiles'     # Для продакшена
 
 # Media files
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
