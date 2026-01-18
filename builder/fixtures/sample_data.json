@@ -1,0 +1,427 @@
+[
+    {
+        "model": "builder.cpu",
+        "pk": 1,
+        "fields": {
+            "name": "Ryzen 5 5600",
+            "manufacturer": "AMD",
+            "socket": "AM4",
+            "cores": 6,
+            "threads": 12,
+            "base_clock": 3.5,
+            "boost_clock": 4.4,
+            "tdp": 65,
+            "has_integrated_gpu": false,
+            "benchmark_score": 21000,
+            "avg_used_price": "8500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.cpu",
+        "pk": 2,
+        "fields": {
+            "name": "Ryzen 5 3600",
+            "manufacturer": "AMD",
+            "socket": "AM4",
+            "cores": 6,
+            "threads": 12,
+            "base_clock": 3.6,
+            "boost_clock": 4.2,
+            "tdp": 65,
+            "has_integrated_gpu": false,
+            "benchmark_score": 17000,
+            "avg_used_price": "6000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.cpu",
+        "pk": 3,
+        "fields": {
+            "name": "Ryzen 7 5800X",
+            "manufacturer": "AMD",
+            "socket": "AM4",
+            "cores": 8,
+            "threads": 16,
+            "base_clock": 3.8,
+            "boost_clock": 4.7,
+            "tdp": 105,
+            "has_integrated_gpu": false,
+            "benchmark_score": 28000,
+            "avg_used_price": "14000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.cpu",
+        "pk": 4,
+        "fields": {
+            "name": "Core i5-12400F",
+            "manufacturer": "Intel",
+            "socket": "LGA1700",
+            "cores": 6,
+            "threads": 12,
+            "base_clock": 2.5,
+            "boost_clock": 4.4,
+            "tdp": 65,
+            "has_integrated_gpu": false,
+            "benchmark_score": 19500,
+            "avg_used_price": "9000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.cpu",
+        "pk": 5,
+        "fields": {
+            "name": "Core i5-10400F",
+            "manufacturer": "Intel",
+            "socket": "LGA1200",
+            "cores": 6,
+            "threads": 12,
+            "base_clock": 2.9,
+            "boost_clock": 4.3,
+            "tdp": 65,
+            "has_integrated_gpu": false,
+            "benchmark_score": 13000,
+            "avg_used_price": "5500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+
+    {
+        "model": "builder.gpu",
+        "pk": 1,
+        "fields": {
+            "name": "GeForce RTX 3060",
+            "manufacturer": "NVIDIA",
+            "vram": 12,
+            "memory_type": "GDDR6",
+            "core_clock": 1777,
+            "tdp": 170,
+            "length": 300,
+            "benchmark_score": 16500,
+            "avg_used_price": "22000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.gpu",
+        "pk": 2,
+        "fields": {
+            "name": "GeForce GTX 1660 Super",
+            "manufacturer": "NVIDIA",
+            "vram": 6,
+            "memory_type": "GDDR6",
+            "core_clock": 1785,
+            "tdp": 125,
+            "length": 250,
+            "benchmark_score": 12500,
+            "avg_used_price": "12000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.gpu",
+        "pk": 3,
+        "fields": {
+            "name": "Radeon RX 6600",
+            "manufacturer": "AMD",
+            "vram": 8,
+            "memory_type": "GDDR6",
+            "core_clock": 2044,
+            "tdp": 132,
+            "length": 240,
+            "benchmark_score": 14000,
+            "avg_used_price": "16000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.gpu",
+        "pk": 4,
+        "fields": {
+            "name": "GeForce RTX 3060 Ti",
+            "manufacturer": "NVIDIA",
+            "vram": 8,
+            "memory_type": "GDDR6",
+            "core_clock": 1670,
+            "tdp": 200,
+            "length": 285,
+            "benchmark_score": 19500,
+            "avg_used_price": "28000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.gpu",
+        "pk": 5,
+        "fields": {
+            "name": "GeForce GTX 1650",
+            "manufacturer": "NVIDIA",
+            "vram": 4,
+            "memory_type": "GDDR5",
+            "core_clock": 1485,
+            "tdp": 75,
+            "length": 200,
+            "benchmark_score": 7500,
+            "avg_used_price": "8000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+
+    {
+        "model": "builder.motherboard",
+        "pk": 1,
+        "fields": {
+            "name": "B550M Pro-VDH WiFi",
+            "manufacturer": "MSI",
+            "socket": "AM4",
+            "chipset": "B550",
+            "form_factor": "mATX",
+            "memory_type": "DDR4",
+            "memory_slots": 4,
+            "max_memory": 128,
+            "avg_used_price": "6500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.motherboard",
+        "pk": 2,
+        "fields": {
+            "name": "B550 AORUS Elite",
+            "manufacturer": "Gigabyte",
+            "socket": "AM4",
+            "chipset": "B550",
+            "form_factor": "ATX",
+            "memory_type": "DDR4",
+            "memory_slots": 4,
+            "max_memory": 128,
+            "avg_used_price": "9000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.motherboard",
+        "pk": 3,
+        "fields": {
+            "name": "B660M-A WiFi",
+            "manufacturer": "ASUS",
+            "socket": "LGA1700",
+            "chipset": "B660",
+            "form_factor": "mATX",
+            "memory_type": "DDR4",
+            "memory_slots": 2,
+            "max_memory": 64,
+            "avg_used_price": "8000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.motherboard",
+        "pk": 4,
+        "fields": {
+            "name": "H510M-K",
+            "manufacturer": "ASUS",
+            "socket": "LGA1200",
+            "chipset": "H510",
+            "form_factor": "mATX",
+            "memory_type": "DDR4",
+            "memory_slots": 2,
+            "max_memory": 64,
+            "avg_used_price": "4500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+
+    {
+        "model": "builder.ram",
+        "pk": 1,
+        "fields": {
+            "name": "Fury Beast DDR4",
+            "manufacturer": "Kingston",
+            "memory_type": "DDR4",
+            "capacity": 16,
+            "modules": 2,
+            "speed": 3200,
+            "avg_used_price": "3500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.ram",
+        "pk": 2,
+        "fields": {
+            "name": "Vengeance LPX DDR4",
+            "manufacturer": "Corsair",
+            "memory_type": "DDR4",
+            "capacity": 16,
+            "modules": 2,
+            "speed": 3600,
+            "avg_used_price": "4000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.ram",
+        "pk": 3,
+        "fields": {
+            "name": "Trident Z RGB DDR4",
+            "manufacturer": "G.Skill",
+            "memory_type": "DDR4",
+            "capacity": 32,
+            "modules": 2,
+            "speed": 3200,
+            "avg_used_price": "6500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.ram",
+        "pk": 4,
+        "fields": {
+            "name": "Fury Beast DDR4 8GB",
+            "manufacturer": "Kingston",
+            "memory_type": "DDR4",
+            "capacity": 8,
+            "modules": 1,
+            "speed": 3200,
+            "avg_used_price": "1800.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+
+    {
+        "model": "builder.psu",
+        "pk": 1,
+        "fields": {
+            "name": "CV550",
+            "manufacturer": "Corsair",
+            "wattage": 550,
+            "efficiency": "Bronze",
+            "is_modular": false,
+            "avg_used_price": "3500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.psu",
+        "pk": 2,
+        "fields": {
+            "name": "RM650",
+            "manufacturer": "Corsair",
+            "wattage": 650,
+            "efficiency": "Gold",
+            "is_modular": true,
+            "avg_used_price": "6000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.psu",
+        "pk": 3,
+        "fields": {
+            "name": "MWE Gold 750",
+            "manufacturer": "Cooler Master",
+            "wattage": 750,
+            "efficiency": "Gold",
+            "is_modular": true,
+            "avg_used_price": "5500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.psu",
+        "pk": 4,
+        "fields": {
+            "name": "VS500",
+            "manufacturer": "Corsair",
+            "wattage": 500,
+            "efficiency": "80+",
+            "is_modular": false,
+            "avg_used_price": "2500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+
+    {
+        "model": "builder.case",
+        "pk": 1,
+        "fields": {
+            "name": "H510",
+            "manufacturer": "NZXT",
+            "form_factor": "ATX",
+            "max_gpu_length": 381,
+            "max_cpu_cooler_height": 165,
+            "avg_used_price": "5000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.case",
+        "pk": 2,
+        "fields": {
+            "name": "NR400",
+            "manufacturer": "Cooler Master",
+            "form_factor": "mATX",
+            "max_gpu_length": 360,
+            "max_cpu_cooler_height": 166,
+            "avg_used_price": "3500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.case",
+        "pk": 3,
+        "fields": {
+            "name": "4000D Airflow",
+            "manufacturer": "Corsair",
+            "form_factor": "ATX",
+            "max_gpu_length": 360,
+            "max_cpu_cooler_height": 170,
+            "avg_used_price": "6000.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "builder.case",
+        "pk": 4,
+        "fields": {
+            "name": "Lancool II Mesh",
+            "manufacturer": "Lian Li",
+            "form_factor": "ATX",
+            "max_gpu_length": 384,
+            "max_cpu_cooler_height": 176,
+            "avg_used_price": "5500.00",
+            "created_at": "2024-01-01T12:00:00Z",
+            "updated_at": "2024-01-01T12:00:00Z"
+        }
+    }
+]
