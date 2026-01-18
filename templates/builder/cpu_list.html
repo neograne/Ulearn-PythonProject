@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Процессоры — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item active">Процессоры</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-cpu"></i> Процессоры</h1>
+
+<!-- Фильтры -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Сокет</label>
+                <select name="socket" class="form-select">
+                    <option value="">Все сокеты</option>
+                    {% for value, label in socket_choices %}
+                    <option value="{{ value }}" {% if current_socket == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Мин. цена</label>
+                <input type="number" name="min_price" class="form-control" 
+                       value="{{ request.GET.min_price }}" placeholder="От">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Макс. цена</label>
+                <input type="number" name="max_price" class="form-control" 
+                       value="{{ request.GET.max_price }}" placeholder="До">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Сортировка</label>
+                <select name="sort" class="form-select">
+                    <option value="-benchmark_score" {% if current_sort == '-benchmark_score' %}selected{% endif %}>
+                        Производительность ↓
+                    </option>
+                    <option value="avg_used_price" {% if current_sort == 'avg_used_price' %}selected{% endif %}>
+                        Цена ↑
+                    </option>
+                    <option value="-avg_used_price" {% if current_sort == '-avg_used_price' %}selected{% endif %}>
+                        Цена ↓
+                    </option>
+                    <option value="name" {% if current_sort == 'name' %}selected{% endif %}>
+                        Название
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Список процессоров -->
+{% if cpus %}
+<div class="row g-4">
+    {% for cpu in cpus %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 card-component">
+            <div class="card-body">
+                <h5 class="card-title">{{ cpu.name }}</h5>
+                <p class="text-muted mb-2">{{ cpu.manufacturer }}</p>
+                
+                <div class="mb-3">
+                    <span class="badge bg-primary badge-socket">{{ cpu.socket }}</span>
+                    <span class="badge bg-secondary">{{ cpu.cores }} ядер</span>
+                    <span class="badge bg-info">{{ cpu.threads }} потоков</span>
+                </div>
+                
+                <ul class="list-unstyled small">
+                    <li><i class="bi bi-speedometer2"></i> {{ cpu.base_clock }} — {{ cpu.boost_clock }} GHz</li>
+                    <li><i class="bi bi-lightning"></i> TDP: {{ cpu.tdp }}W</li>
+                    <li><i class="bi bi-bar-chart"></i> Benchmark: {{ cpu.benchmark_score }}</li>
+                </ul>
+                
+                <p class="price-tag mb-0">{{ cpu.avg_used_price|floatformat:0 }} ₽</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'cpu_detail' cpu.pk %}" class="btn btn-outline-primary btn-sm">
+                    Подробнее
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> Процессоры не найдены. Попробуйте изменить фильтры.
+</div>
+{% endif %}
+{% endblock %}

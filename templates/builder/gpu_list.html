@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Видеокарты — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item active">Видеокарты</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-gpu-card"></i> Видеокарты</h1>
+
+<!-- Фильтры -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Видеопамять</label>
+                <select name="vram" class="form-select">
+                    <option value="">Любой объём</option>
+                    <option value="4" {% if request.GET.vram == '4' %}selected{% endif %}>4 GB</option>
+                    <option value="6" {% if request.GET.vram == '6' %}selected{% endif %}>6 GB</option>
+                    <option value="8" {% if request.GET.vram == '8' %}selected{% endif %}>8 GB</option>
+                    <option value="12" {% if request.GET.vram == '12' %}selected{% endif %}>12 GB</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Мин. цена</label>
+                <input type="number" name="min_price" class="form-control" 
+                       value="{{ request.GET.min_price }}" placeholder="От">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Макс. цена</label>
+                <input type="number" name="max_price" class="form-control" 
+                       value="{{ request.GET.max_price }}" placeholder="До">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Сортировка</label>
+                <select name="sort" class="form-select">
+                    <option value="-benchmark_score" {% if current_sort == '-benchmark_score' %}selected{% endif %}>
+                        Производительность ↓
+                    </option>
+                    <option value="avg_used_price" {% if current_sort == 'avg_used_price' %}selected{% endif %}>
+                        Цена ↑
+                    </option>
+                    <option value="-avg_used_price" {% if current_sort == '-avg_used_price' %}selected{% endif %}>
+                        Цена ↓
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Список видеокарт -->
+{% if gpus %}
+<div class="row g-4">
+    {% for gpu in gpus %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 card-component">
+            <div class="card-body">
+                <h5 class="card-title">{{ gpu.name }}</h5>
+                <p class="text-muted mb-2">{{ gpu.manufacturer }}</p>
+                
+                <div class="mb-3">
+                    <span class="badge bg-success">{{ gpu.vram }} GB</span>
+                    <span class="badge bg-info">{{ gpu.memory_type }}</span>
+                </div>
+                
+                <ul class="list-unstyled small">
+                    <li><i class="bi bi-speedometer2"></i> {{ gpu.core_clock }} MHz</li>
+                    <li><i class="bi bi-lightning"></i> TDP: {{ gpu.tdp }}W</li>
+                    <li><i class="bi bi-arrows-expand"></i> Длина: {{ gpu.length }} мм</li>
+                    <li><i class="bi bi-bar-chart"></i> Benchmark: {{ gpu.benchmark_score }}</li>
+                </ul>
+                
+                <p class="price-tag mb-0">{{ gpu.avg_used_price|floatformat:0 }} ₽</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'gpu_detail' gpu.pk %}" class="btn btn-outline-primary btn-sm">
+                    Подробнее
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> Видеокарты не найдены.
+</div>
+{% endif %}
+{% endblock %}

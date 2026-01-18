@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Корпуса — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item active">Корпуса</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-box"></i> Корпуса</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Форм-фактор</label>
+                <select name="form_factor" class="form-select">
+                    <option value="">Все</option>
+                    {% for value, label in form_factor_choices %}
+                    <option value="{{ value }}" {% if current_form_factor == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if cases %}
+<div class="row g-4">
+    {% for case in cases %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 card-component">
+            <div class="card-body">
+                <h5 class="card-title">{{ case.name }}</h5>
+                <p class="text-muted mb-2">{{ case.manufacturer }}</p>
+                
+                <div class="mb-3">
+                    <span class="badge bg-secondary">{{ case.form_factor }}</span>
+                </div>
+                
+                <ul class="list-unstyled small">
+                    <li><i class="bi bi-gpu-card"></i> Макс. GPU: {{ case.max_gpu_length }} мм</li>
+                    <li><i class="bi bi-fan"></i> Макс. кулер: {{ case.max_cpu_cooler_height }} мм</li>
+                </ul>
+                
+                <p class="price-tag mb-0">{{ case.avg_used_price|floatformat:0 }} ₽</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">Корпуса не найдены.</div>
+{% endif %}
+{% endblock %}

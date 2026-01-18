@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ cpu.name }} — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'cpu_list' %}">Процессоры</a></li>
+        <li class="breadcrumb-item active">{{ cpu.name }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-8">
+        <h1>{{ cpu.manufacturer }} {{ cpu.name }}</h1>
+        
+        <div class="mb-3">
+            <span class="badge bg-primary fs-6">{{ cpu.socket }}</span>
+            {% if cpu.has_integrated_gpu %}
+            <span class="badge bg-success fs-6">Встроенная графика</span>
+            {% endif %}
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="bi bi-list-ul"></i> Характеристики
+            </div>
+            <div class="card-body">
+                <table class="table table-striped mb-0">
+                    <tbody>
+                        <tr>
+                            <th>Производитель</th>
+                            <td>{{ cpu.manufacturer }}</td>
+                        </tr>
+                        <tr>
+                            <th>Сокет</th>
+                            <td>{{ cpu.socket }}</td>
+                        </tr>
+                        <tr>
+                            <th>Количество ядер</th>
+                            <td>{{ cpu.cores }}</td>
+                        </tr>
+                        <tr>
+                            <th>Количество потоков</th>
+                            <td>{{ cpu.threads }}</td>
+                        </tr>
+                        <tr>
+                            <th>Базовая частота</th>
+                            <td>{{ cpu.base_clock }} GHz</td>
+                        </tr>
+                        <tr>
+                            <th>Турбо частота</th>
+                            <td>{{ cpu.boost_clock }} GHz</td>
+                        </tr>
+                        <tr>
+                            <th>TDP</th>
+                            <td>{{ cpu.tdp }} Вт</td>
+                        </tr>
+                        <tr>
+                            <th>Benchmark Score</th>
+                            <td>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar bg-success" 
+                                         style="width: {% widthratio cpu.benchmark_score 30000 100 %}%">
+                                        {{ cpu.benchmark_score }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card border-success mb-4">
+            <div class="card-body text-center">
+                <p class="text-muted mb-1">Средняя цена б/у</p>
+                <h2 class="text-success mb-3">{{ cpu.avg_used_price|floatformat:0 }} ₽</h2>
+                <a href="{% url 'build_create' %}" class="btn btn-success btn-lg w-100">
+                    <i class="bi bi-plus-circle"></i> Добавить в сборку
+                </a>
+            </div>
+        </div>
+        
+        {% if similar %}
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-shuffle"></i> Похожие процессоры
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for item in similar %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'cpu_detail' item.pk %}">{{ item.name }}</a>
+                    <span class="badge bg-success">{{ item.avg_used_price|floatformat:0 }} ₽</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

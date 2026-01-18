@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Блоки питания — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item active">Блоки питания</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-lightning-charge"></i> Блоки питания</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Сертификат</label>
+                <select name="efficiency" class="form-select">
+                    <option value="">Все</option>
+                    {% for value, label in efficiency_choices %}
+                    <option value="{{ value }}" {% if current_efficiency == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Мин. мощность (Вт)</label>
+                <input type="number" name="min_wattage" class="form-control" 
+                       value="{{ request.GET.min_wattage }}" placeholder="Например: 500">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if psus %}
+<div class="row g-4">
+    {% for psu in psus %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 card-component">
+            <div class="card-body">
+                <h5 class="card-title">{{ psu.name }}</h5>
+                <p class="text-muted mb-2">{{ psu.manufacturer }}</p>
+                
+                <div class="mb-3">
+                    <span class="badge bg-danger">{{ psu.wattage }}W</span>
+                    <span class="badge bg-warning text-dark">{{ psu.efficiency }}</span>
+                    {% if psu.is_modular %}
+                    <span class="badge bg-success">Модульный</span>
+                    {% endif %}
+                </div>
+                
+                <p class="price-tag mb-0">{{ psu.avg_used_price|floatformat:0 }} ₽</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">Блоки питания не найдены.</div>
+{% endif %}
+{% endblock %}

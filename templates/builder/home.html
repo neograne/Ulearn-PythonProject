@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}PC Builder — Конфигуратор бюджетных ПК{% endblock %}
+
+{% block content %}
+<!-- Hero секция -->
+<div class="bg-light rounded-3 p-5 mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-5 fw-bold">
+                <i class="bi bi-pc-display text-primary"></i> Budget PC Builder
+            </h1>
+            <p class="lead">
+                Собери игровой ПК из б/у комплектующих с автоматической проверкой совместимости. 
+                Экономь бюджет без потери производительности!
+            </p>
+            <a href="{% url 'build_create' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-tools"></i> Начать сборку
+            </a>
+            <a href="{% url 'build_list' %}" class="btn btn-outline-secondary btn-lg ms-2">
+                <i class="bi bi-collection"></i> Смотреть сборки
+            </a>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="bi bi-motherboard display-1 text-primary"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Статистика -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-cpu fs-1 text-primary"></i>
+                <h3 class="mt-2">{{ cpu_count }}</h3>
+                <p class="text-muted mb-0">Процессоров</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'cpu_list' %}" class="btn btn-sm btn-outline-primary">Смотреть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-gpu-card fs-1 text-success"></i>
+                <h3 class="mt-2">{{ gpu_count }}</h3>
+                <p class="text-muted mb-0">Видеокарт</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'gpu_list' %}" class="btn btn-sm btn-outline-success">Смотреть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-motherboard fs-1 text-warning"></i>
+                <h3 class="mt-2">{{ motherboard_count }}</h3>
+                <p class="text-muted mb-0">Мат. плат</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'motherboard_list' %}" class="btn btn-sm btn-outline-warning">Смотреть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-memory fs-1 text-info"></i>
+                <h3 class="mt-2">{{ ram_count }}</h3>
+                <p class="text-muted mb-0">RAM</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'ram_list' %}" class="btn btn-sm btn-outline-info">Смотреть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-lightning-charge fs-1 text-danger"></i>
+                <h3 class="mt-2">{{ psu_count }}</h3>
+                <p class="text-muted mb-0">Блоков питания</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'psu_list' %}" class="btn btn-sm btn-outline-danger">Смотреть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-box fs-1 text-secondary"></i>
+                <h3 class="mt-2">{{ case_count }}</h3>
+                <p class="text-muted mb-0">Корпусов</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'case_list' %}" class="btn btn-sm btn-outline-secondary">Смотреть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Возможности -->
+<h2 class="mb-4"><i class="bi bi-stars"></i> Возможности сервиса</h2>
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 border-primary">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-check-circle text-success"></i> Проверка совместимости
+                </h5>
+                <p class="card-text">
+                    Автоматическая проверка сокетов, форм-факторов и мощности БП. 
+                    Больше никаких ошибок при сборке!
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-success">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-graph-up text-primary"></i> Аналитика и графики
+                </h5>
+                <p class="card-text">
+                    Визуализация распределения бюджета, расчёт энергопотребления 
+                    и оценка производительности.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-warning">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-piggy-bank text-warning"></i> Фокус на б/у рынок
+                </h5>
+                <p class="card-text">
+                    Актуальные средние цены на вторичном рынке. 
+                    Собери мощный ПК за разумные деньги!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Последние сборки -->
+{% if latest_builds %}
+<h2 class="mb-4"><i class="bi bi-clock-history"></i> Последние сборки</h2>
+<div class="row g-4">
+    {% for build in latest_builds %}
+    <div class="col-md-4">
+        <div class="card h-100 card-component">
+            <div class="card-body">
+                <h5 class="card-title">{{ build.name }}</h5>
+                <p class="text-muted small">
+                    <i class="bi bi-person"></i> {{ build.user.username }}
+                </p>
+                <ul class="list-unstyled small">
+                    {% if build.cpu %}<li><i class="bi bi-cpu"></i> {{ build.cpu.name }}</li>{% endif %}
+                    {% if build.gpu %}<li><i class="bi bi-gpu-card"></i> {{ build.gpu.name }}</li>{% endif %}
+                </ul>
+                <p class="price-tag mb-0">{{ build.get_total_price|floatformat:0 }} ₽</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'build_detail' build.pk %}" class="btn btn-outline-primary btn-sm">
+                    Подробнее
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

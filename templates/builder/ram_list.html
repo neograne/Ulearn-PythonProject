@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Оперативная память — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item active">Оперативная память</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-memory"></i> Оперативная память</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Тип памяти</label>
+                <select name="memory_type" class="form-select">
+                    <option value="">Все</option>
+                    {% for value, label in memory_type_choices %}
+                    <option value="{{ value }}" {% if current_memory_type == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Сортировка</label>
+                <select name="sort" class="form-select">
+                    <option value="-capacity" {% if current_sort == '-capacity' %}selected{% endif %}>Объём ↓</option>
+                    <option value="avg_used_price" {% if current_sort == 'avg_used_price' %}selected{% endif %}>Цена ↑</option>
+                    <option value="-speed" {% if current_sort == '-speed' %}selected{% endif %}>Частота ↓</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if rams %}
+<div class="row g-4">
+    {% for ram in rams %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 card-component">
+            <div class="card-body">
+                <h5 class="card-title">{{ ram.name }}</h5>
+                <p class="text-muted mb-2">{{ ram.manufacturer }}</p>
+                
+                <div class="mb-3">
+                    <span class="badge bg-primary">{{ ram.memory_type }}</span>
+                    <span class="badge bg-success">{{ ram.capacity }} GB</span>
+                    <span class="badge bg-info">{{ ram.speed }} MHz</span>
+                </div>
+                
+                <p class="small"><i class="bi bi-stack"></i> {{ ram.modules }} модуль(ей)</p>
+                
+                <p class="price-tag mb-0">{{ ram.avg_used_price|floatformat:0 }} ₽</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">RAM не найдена.</div>
+{% endif %}
+{% endblock %}
