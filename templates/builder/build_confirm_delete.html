@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление сборки — PC Builder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <i class="bi bi-exclamation-triangle"></i> Подтверждение удаления
+            </div>
+            <div class="card-body text-center">
+                <h4>Вы уверены, что хотите удалить сборку?</h4>
+                <p class="lead">«{{ build.name }}»</p>
+                <p class="text-muted">Это действие нельзя отменить.</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="bi bi-trash"></i> Да, удалить
+                    </button>
+                    <a href="{% url 'build_detail' build.pk %}" class="btn btn-secondary btn-lg">
+                        Отмена
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ build.name }} — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'build_list' %}">Сборки</a></li>
+        <li class="breadcrumb-item active">{{ build.name }}</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1>{{ build.name }}</h1>
+        <p class="text-muted">
+            <i class="bi bi-person"></i> {{ build.user.username }} · 
+            <i class="bi bi-calendar"></i> {{ build.created_at|date:"d.m.Y H:i" }}
+            {% if not build.is_public %}
+            <span class="badge bg-warning text-dark ms-2">
+                <i class="bi bi-lock"></i> Приватная
+            </span>
+            {% endif %}
+        </p>
+    </div>
+    
+    {% if user == build.user %}
+    <div>
+        <a href="{% url 'build_edit' build.pk %}" class="btn btn-outline-primary">
+            <i class="bi bi-pencil"></i> Редактировать
+        </a>
+        <a href="{% url 'build_delete' build.pk %}" class="btn btn-outline-danger">
+            <i class="bi bi-trash"></i> Удалить
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% if build.description %}
+<p class="lead">{{ build.description }}</p>
+{% endif %}
+
+<!-- Ошибки совместимости -->
+{% if compatibility_errors %}
+<div class="mb-4">
+    {% for error in compatibility_errors %}
+    <div class="alert {% if error.type == 'error' %}alert-danger compatibility-error{% else %}alert-warning compatibility-warning{% endif %}">
+        <i class="bi {% if error.type == 'error' %}bi-x-circle{% else %}bi-exclamation-triangle{% endif %}"></i>
+        {{ error.message }}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-success mb-4">
+    <i class="bi bi-check-circle"></i> Все компоненты совместимы!
+</div>
+{% endif %}
+
+<div class="row">
+    <!-- Компоненты -->
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="bi bi-list-check"></i> Компоненты сборки
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Компонент</th>
+                            <th>Название</th>
+                            <th class="text-end">Цена</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if build.cpu %}
+                        <tr>
+                            <td><i class="bi bi-cpu text-primary"></i> Процессор</td>
+                            <td>
+                                <a href="{% url 'cpu_detail' build.cpu.pk %}">
+                                    {{ build.cpu.manufacturer }} {{ build.cpu.name }}
+                                </a>
+                                <br>
+                                <small class="text-muted">
+                                    {{ build.cpu.socket }} · {{ build.cpu.cores }} ядер · {{ build.cpu.tdp }}W
+                                </small>
+                            </td>
+                            <td class="text-end">{{ build.cpu.avg_used_price|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% endif %}
+                        
+                        {% if build.gpu %}
+                        <tr>
+                            <td><i class="bi bi-gpu-card text-success"></i> Видеокарта</td>
+                            <td>
+                                <a href="{% url 'gpu_detail' build.gpu.pk %}">
+                                    {{ build.gpu.manufacturer }} {{ build.gpu.name }}
+                                </a>
+                                <br>
+                                <small class="text-muted">
+                                    {{ build.gpu.vram }}GB · {{ build.gpu.tdp }}W · {{ build.gpu.length }}мм
+                                </small>
+                            </td>
+                            <td class="text-end">{{ build.gpu.avg_used_price|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% endif %}
+                        
+                        {% if build.motherboard %}
+                        <tr>
+                            <td><i class="bi bi-motherboard text-warning"></i> Мат. плата</td>
+                            <td>
+                                {{ build.motherboard.manufacturer }} {{ build.motherboard.name }}
+                                <br>
+                                <small class="text-muted">
+                                    {{ build.motherboard.socket }} · {{ build.motherboard.form_factor }} · {{ build.motherboard.memory_type }}
+                                </small>
+                            </td>
+                            <td class="text-end">{{ build.motherboard.avg_used_price|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% endif %}
+                        
+                        {% if build.ram %}
+                        <tr>
+                            <td><i class="bi bi-memory text-info"></i> RAM</td>
+                            <td>
+                                {{ build.ram.manufacturer }} {{ build.ram.name }}
+                                <br>
+                                <small class="text-muted">
+                                    {{ build.ram.capacity }}GB · {{ build.ram.memory_type }} · {{ build.ram.speed }}MHz
+                                </small>
+                            </td>
+                            <td class="text-end">{{ build.ram.avg_used_price|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% endif %}
+                        
+                        {% if build.psu %}
+                        <tr>
+                            <td><i class="bi bi-lightning-charge text-danger"></i> Блок питания</td>
+                            <td>
+                                {{ build.psu.manufacturer }} {{ build.psu.name }}
+                                <br>
+                                <small class="text-muted">
+                                    {{ build.psu.wattage }}W · {{ build.psu.efficiency }}
+                                    {% if build.psu.is_modular %} · Модульный{% endif %}
+                                </small>
+                            </td>
+                            <td class="text-end">{{ build.psu.avg_used_price|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% endif %}
+                        
+                        {% if build.case %}
+                        <tr>
+                            <td><i class="bi bi-box text-secondary"></i> Корпус</td>
+                            <td>
+                                {{ build.case.manufacturer }} {{ build.case.name }}
+                                <br>
+                                <small class="text-muted">
+                                    {{ build.case.form_factor }} · GPU до {{ build.case.max_gpu_length }}мм
+                                </small>
+                            </td>
+                            <td class="text-end">{{ build.case.avg_used_price|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <th colspan="2">Итого</th>
+                            <th class="text-end price-tag">{{ total_price|floatformat:0 }} ₽</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        
+        <!-- График распределения бюджета -->
+        {% if budget_chart %}
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pie-chart"></i> Распределение бюджета
+            </div>
+            <div class="card-body">
+                {{ budget_chart|safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Боковая панель -->
+    <div class="col-lg-4">
+        <!-- Характеристики -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="bi bi-speedometer2"></i> Характеристики
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Общая стоимость</span>
+                    <strong class="text-success">{{ total_price|floatformat:0 }} ₽</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Энергопотребление</span>
+                    <strong>{{ total_tdp }} Вт</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Рекомендуемый БП</span>
+                    <strong>{{ recommended_psu }} Вт</strong>
+                </li>
+                {% if build.cpu %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>CPU Benchmark</span>
+                    <strong>{{ build.cpu.benchmark_score }}</strong>
+                </li>
+                {% endif %}
+                {% if build.gpu %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>GPU Benchmark</span>
+                    <strong>{{ build.gpu.benchmark_score }}</strong>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        
+        <!-- Действия -->
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-gear"></i> Действия
+            </div>
+            <div class="card-body">
+                <a href="{% url 'build_create' %}" class="btn btn-primary w-100 mb-2">
+                    <i class="bi bi-plus-circle"></i> Создать похожую
+                </a>
+                <a href="{% url 'build_list' %}" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-arrow-left"></i> К списку сборок
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

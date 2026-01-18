@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} — PC Builder{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'build_list' %}">Сборки</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-tools"></i> {{ title }}</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Название и описание -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-info-circle"></i> Основная информация</h5>
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Название сборки *</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                            <div class="text-danger small">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_description" class="form-label">Описание</label>
+                            {{ form.description }}
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <!-- Компоненты -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-cpu"></i> Компоненты</h5>
+                        
+                        <div class="mb-3">
+                            <label for="id_cpu" class="form-label">
+                                <i class="bi bi-cpu text-primary"></i> Процессор *
+                            </label>
+                            {{ form.cpu }}
+                            {% if form.cpu.errors %}
+                            <div class="text-danger small">{{ form.cpu.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_motherboard" class="form-label">
+                                <i class="bi bi-motherboard text-warning"></i> Материнская плата *
+                            </label>
+                            {{ form.motherboard }}
+                            <small class="text-muted">Убедитесь, что сокет совпадает с процессором</small>
+                            {% if form.motherboard.errors %}
+                            <div class="text-danger small">{{ form.motherboard.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_gpu" class="form-label">
+                                <i class="bi bi-gpu-card text-success"></i> Видеокарта
+                            </label>
+                            {{ form.gpu }}
+                            <small class="text-muted">Опционально, если у процессора есть встроенная графика</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_ram" class="form-label">
+                                <i class="bi bi-memory text-info"></i> Оперативная память *
+                            </label>
+                            {{ form.ram }}
+                            <small class="text-muted">Тип памяти должен поддерживаться материнской платой</small>
+                            {% if form.ram.errors %}
+                            <div class="text-danger small">{{ form.ram.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_psu" class="form-label">
+                                <i class="bi bi-lightning-charge text-danger"></i> Блок питания *
+                            </label>
+                            {{ form.psu }}
+                            <small class="text-muted">Рекомендуется запас мощности 30% от суммарного TDP</small>
+                            {% if form.psu.errors %}
+                            <div class="text-danger small">{{ form.psu.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_case" class="form-label">
+                                <i class="bi bi-box text-secondary"></i> Корпус
+                            </label>
+                            {{ form.case }}
+                            <small class="text-muted">Проверьте совместимость форм-фактора и длины видеокарты</small>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <!-- Настройки -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-gear"></i> Настройки</h5>
+                        <div class="form-check">
+                            {{ form.is_public }}
+                            <label class="form-check-label" for="id_is_public">
+                                Публичная сборка (видна всем)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопки -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i> Сохранить
+                        </button>
+                        <a href="{% url 'build_list' %}" class="btn btn-outline-secondary btn-lg">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Подсказки -->
+    <div class="col-lg-4">
+        <div class="card bg-light">
+            <div class="card-header">
+                <i class="bi bi-lightbulb"></i> Подсказки
+            </div>
+            <div class="card-body">
+                <h6>Проверка совместимости</h6>
+                <p class="small">После сохранения система автоматически проверит:</p>
+                <ul class="small">
+                    <li>Сокет CPU = Сокет мат. платы</li>
+                    <li>Тип RAM = Тип RAM мат. платы</li>
+                    <li>Длина GPU ≤ Макс. длина в корпусе</li>
+                    <li>Мощность БП ≥ TDP × 1.3</li>
+                </ul>
+                
+                <hr>
+                
+                <h6>Обязательные поля</h6>
+                <p class="small mb-0">
+                    Отмечены звёздочкой (*). Видеокарта и корпус — опциональны.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
