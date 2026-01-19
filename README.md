@@ -6,7 +6,7 @@
 сборки из б/у комплектующих. Помогает начинающим сборщикам избежать ошибок 
 совместимости и оптимизировать бюджет.
 
-**Демо:** [https://neograne.pythonanywhere.com](https://neograne.pythonanywhere.com)
+**Демо:** [https://neograne.pythonanywhere.com](https://neograne.pythonanywhere.com) - работает только с впн (к сожалению)
 
 ---
 
